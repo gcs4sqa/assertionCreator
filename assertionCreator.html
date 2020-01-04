@@ -1,19 +1,21 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <link rel="stylesheet" href="./style/assertion.css">
+    <script src="assertionCreator.js">
+      
+    </script>
     <title>STaMP Assertions</title>
   </head>
-  <body style="background-color: bisque">
-    <div style="text-align: center">
-      <h1 style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">
-        Assertion Creator version 2.5
+  <body onload="load()">
+    <div id="centre">
+      <h1 id="version">
+        Assertion Creator version
       </h1>
-      <p style="color:red;font-size:10px; font-style: italic;">
-        by Cliff Douglas
-      </p>
+      <p id="auth"></p>
     </div>
 
-    <div style="padding-left: 20px">
+    <div id="changes">
       <h2>Changes:</h2>
       <ul>
         <li>Removed . when parent key is not an object</li>
@@ -23,11 +25,13 @@
       <p>Paste your json in the text box</p>
     </div>
 
-    <div style="padding-bottom: 20px; padding-left: 20px">
+    <div id="changes">
       <p>
         Click the button to display the value of the attributes of the text
         field.
       </p>
+    </div>
+    <div id="buttons">
       <button onclick="myFunction()">Create your assertions</button>
       <button onclick="prettyPrint()">Make Pretty</button>
     </div>
@@ -40,114 +44,5 @@
     ></textarea>
 
     <p id="assertions"></p>
-
-    <script>
-      function json2txt(obj, path) {
-        var txt = '';
-        var value = '';
-
-        for (var key in obj) {
-          if (obj.hasOwnProperty(key)) {
-            if ('object' === typeof obj[key]) {
-              if (isNaN(key)) {
-                txt += json2txt(obj[key], path + (path ? '.' : '') + key);
-              } else {
-                txt += json2txt(obj[key], path + (path ? '[' : '') + key + ']');
-              }
-            } else if ('string' === typeof obj[key]) {
-              if (isNaN(key)) {
-                txt +=
-                  '.body("' +
-                  path +
-                  '.' +
-                  key +
-                  '", equalTo("' +
-                  obj[key] +
-                  '"))' +
-                  '<br/>.and()<br/>';
-                txt = txt.replace('.body(".', '.body("');
-              } else {
-                txt +=
-                  '.body("' +
-                  path +
-                  '[' +
-                  key +
-                  ']", equalTo("' +
-                  obj[key] +
-                  '"))' +
-                  '<br/>.and()<br/>';
-              }
-            } else {
-              if (Number.isInteger(obj[key])) {
-                value = obj[key];
-              } else if (obj[key] == true) {
-                value = obj[key];
-              } else if (obj[key] == false) {
-                value = obj[key];
-              } else {
-                value = obj[key] + 'f';
-              }
-
-              txt +=
-                '.body("' +
-                path +
-                '.' +
-                key +
-                '", equalTo(' +
-                value +
-                '))' +
-                '<br/>.and()<br/>';
-              txt = txt.replace('.body(".', '.body("');
-            }
-          }
-        }
-        return txt;
-      }
-
-      function myFunction() {
-        if (IsJsonString(document.getElementById('inputJson').value)) {
-          document.getElementById('assertions').innerHTML = '';
-          var myObj = JSON.parse(document.getElementById('inputJson').value);
-
-          document.getElementById('assertions').innerHTML += json2txt(
-            myObj,
-            ''
-          );
-
-          var text = document.getElementById('assertions').innerHTML;
-          var textLength = text.trim().length;
-          document.getElementById('assertions').innerHTML =
-            '--------copy and paste the relevant assertions into your script -------------<br/><br/>' +
-            text.substring(0, textLength - 14) +
-            ';';
-        } else {
-          document.getElementById('assertions').innerHTML =
-            "<span style='color:red'>  Not valid JSON </span>";
-        }
-      }
-
-      function prettyPrint() {
-        document.getElementById('assertions').innerText = '';
-        if (IsJsonString(document.getElementById('inputJson').value)) {
-          var obj = JSON.parse(document.getElementById('inputJson').value);
-          var pretty = JSON.stringify(obj, undefined, 4);
-          document.getElementById('inputJson').value = pretty;
-          document.getElementById('assertions').innerHTML =
-            "<span style='color:green'> JSON is well structured </span>";
-        } else {
-          document.getElementById('assertions').innerHTML =
-            "<span style='color:red'>  Not valid JSON </span>";
-        }
-      }
-
-      function IsJsonString(str) {
-        try {
-          JSON.parse(str);
-        } catch (e) {
-          return false;
-        }
-        return true;
-      }
-    </script>
   </body>
 </html>

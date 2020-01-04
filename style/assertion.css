@@ -1,0 +1,33 @@
+body {
+    background-color: bisque;
+}
+
+div#centre {
+    text-align: center;
+}
+
+h1 {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+p {
+    color:red;
+    font-size:15px; 
+    font-style: italic;
+}
+
+div#changes{
+    padding-left: 20px;
+}
+
+p#assertions{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding-left: 20px;
+    font-size: 15px;
+    color: black;
+
+}
+
+#buttons{
+    margin: 0px 0px 20px 20px;
+}
