@@ -31,3 +31,8 @@ p#assertions{
 #buttons{
     margin: 0px 0px 20px 20px;
 }
+
+button:hover{
+    background-color: red;
+    color: white;
+}

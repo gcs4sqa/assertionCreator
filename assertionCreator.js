@@ -36,7 +36,7 @@ function json2txt(obj, path) {
     return txt;
   }
 
-  function myFunction() {
+  function createAssertion() {
     if (IsJsonString(document.getElementById('inputJson').value)) {
       document.getElementById('assertions').innerHTML = '';
       var myObj = JSON.parse(document.getElementById('inputJson').value);
