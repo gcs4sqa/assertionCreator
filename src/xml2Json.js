@@ -43,10 +43,10 @@ if (typeof Object.assign != 'function') {
 /**
 * Object to convert XML into a structured JSON object
 *
-* @method xmlToJson
+* @method xml2Json
 * @returns {Object}
 */
-var xmlToJson = (function () {
+var xml2Json = (function () {
   var self = this;
 
 

@@ -55,7 +55,7 @@ function json2txt(obj, path)
 
 function xmljson(){
     var input = document.getElementById('inputJson').value;
-    var json = xmlToJson.parse(input);
+    var json = xml2Json.parse(input);
     //clear out current assertions
     document.getElementById("assertions").innerHTML = '';
     document.getElementById("assertions").innerHTML += json2txt(json, '');
