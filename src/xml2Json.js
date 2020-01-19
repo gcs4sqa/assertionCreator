@@ -9,19 +9,24 @@ if (typeof Object.assign != 'function') {
   Object.defineProperty(Object, "assign", {
     value: function assign(target, varArgs) { // .length of function is 2
       'use strict';
-      if (target == null) { // TypeError if undefined or null
+      if (target == null) 
+      { // TypeError if undefined or null
         throw new TypeError('Cannot convert undefined or null to object');
       }
 
       var to = Object(target);
 
-      for (var index = 1; index < arguments.length; index++) {
+      for (var index = 1; index < arguments.length; index++) 
+      {
         var nextSource = arguments[index];
 
-        if (nextSource != null) { // Skip over if undefined or null
-          for (var nextKey in nextSource) {
+        if (nextSource != null) 
+        { // Skip over if undefined or null
+          for (var nextKey in nextSource) 
+          {
             // Avoid bugs when hasOwnProperty is shadowed
-            if (Object.prototype.hasOwnProperty.call(nextSource, nextKey)) {
+            if (Object.prototype.hasOwnProperty.call(nextSource, nextKey)) 
+            {
               to[nextKey] = nextSource[nextKey];
             }
           }
@@ -57,7 +62,8 @@ var xmlToJson = (function () {
   self.addToParent = function (parent, nodeName, obj) {
     // If this is the first or only instance of the node name, assign it as
     // an object on the parent.
-    if (!parent[nodeName]) {
+    if (!parent[nodeName]) 
+    {
       parent[nodeName] = obj;
     }
     // Else the parent knows about other nodes of the same name
@@ -66,7 +72,8 @@ var xmlToJson = (function () {
       // store the contents of that property, convert the property to an array, and
       // assign what was formerly an object on the parent to the first member of the
       // array
-      if (!Array.isArray(parent[nodeName])) {
+      if (!Array.isArray(parent[nodeName])) 
+      {
         var tmp = parent[nodeName];
         parent[nodeName] = [];
         parent[nodeName].push(tmp);
@@ -83,7 +90,8 @@ var xmlToJson = (function () {
   self.convertXMLStringToDoc = function (str) {
     var xmlDoc = null;
 
-    if (str && typeof str === 'string') {
+    if (str && typeof str === 'string') 
+    {
       // Create a DOMParser
       var parser = new DOMParser();
 
@@ -123,8 +131,10 @@ var xmlToJson = (function () {
     // If the node has attributes, assign the new object properties
     // corresponding to each attribute
     
-    if (node.hasAttributes()) {
-      for (var i = 0; i < attributes.length; i++) {
+    if (node.hasAttributes()) 
+    {
+      for (var i = 0; i < attributes.length; i++) 
+      {
         obj[attributes[i].name] = self.parseValue(attributes[i].value);
       }
     }
@@ -148,11 +158,14 @@ var xmlToJson = (function () {
 	*/
   self.parseChildren = function (parent, childNodes) {
     // If there are child nodes...
-    if (childNodes.length > 0) {
+    if (childNodes.length > 0) 
+    {
       // Loop over all the child nodes
-      for (var i = 0; i < childNodes.length; i++) {
+      for (var i = 0; i < childNodes.length; i++) 
+      {
         // If the child node is a XMLNode, parse the node
-        if (childNodes[i].nodeType == 1) {
+        if (childNodes[i].nodeType == 1) 
+        {
           self.parseNode(parent, childNodes[i]);
         }
       }
@@ -174,23 +187,26 @@ var xmlToJson = (function () {
       tmp = null;
 
     // If there is only one text child node, there is no need to process the children
-    if (node.childNodes.length == 1 && node.childNodes[0].nodeType == 3) {
+    if (node.childNodes.length == 1 && node.childNodes[0].nodeType == 3) 
+    {
       // If the node has attributes, then the object will already have properties.
       // Add a new property 'text' with the value of the text content
-      if (node.hasAttributes()) {
-      
+      if (node.hasAttributes()) 
+      {
         //cliff douglas - removed the adding of an additional property when a tag has an attribute
         // obj['text'] = self.parseValue(node.childNodes[0].nodeValue);
         obj = self.parseValue(node.childNodes[0].nodeValue);
       }
       // If there are no attributes, then the parent[nodeName] property value is
       // simply the interpreted textual content
-      else {
+      else 
+      {
         obj = self.parseValue(node.childNodes[0].nodeValue);
       }
     }
     // Otherwise, there are child XMLNode elements, so process them
-    else {
+    else 
+    {
       self.parseChildren(obj, node.childNodes);
     }
 
@@ -233,8 +249,10 @@ var xmlToJson = (function () {
 
   // Expose the API
   return {
-    parse: function (xml) {
-      if (xml && typeof xml === 'string') {
+    parse: function (xml) 
+    {
+      if (xml && typeof xml === 'string') 
+      {
         xml = self.convertXMLStringToDoc(xml);
       }
       return (xml && self.isXML(xml)) ? self.parseNode({}, xml.firstChild) : null;
